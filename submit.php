@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>grmnda</title>
-	<meta charset="utf-8">
+	<title>Your Short URL</title>
 </head>
 <body>
 <?php 
@@ -13,10 +12,10 @@
 	$DBPass = '15253555';
 	$DBName = 'url';
 	$con = mysql_connect($DBHost, $DBUser, $DBPass) or die('Cannot connect to database');
-	$db = mysql_select_db($DBName, $con) or die('5'.mysql_error());
-	/* user-i tvac url-@ */
+	$db = mysql_select_db($DBName, $con) or die(mysql_error());
+	/* Get long url */
 	$full = $_POST['fullurl'];
-	/* Random string-i stanalu function */
+	/* Random string generator */
 	function getRandomString($length = 6) {
 		$validCharacters = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		$validCharNumber = strlen($validCharacters);
@@ -29,7 +28,7 @@
 		return $rand;
 	}
 
-	/* Random string-@ DB-um stugelu function */
+	/* Function to check generated random string in database */
 	function check2(){
 		$val = getRandomString();
 		global $full, $siteURL;
@@ -45,7 +44,7 @@
 			check2();
 		}
 	}
-	/* user-i tvac url-@ DB-um stugelu function */
+	/* Function to check if url already has been shortened */
 	function check(){
 		global $full, $siteURL;
 		$sql2 = mysql_query("SELECT * FROM used WHERE full = '$full'") or die('2'.mysql_error());
